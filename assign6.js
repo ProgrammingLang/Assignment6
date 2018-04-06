@@ -75,20 +75,25 @@ var Y_REM = "("+Y+" "+REMAINDER+")";
 
 // Problem 3 -- Recursive function for the length of a list
 
-// var LENGTH = ?????????
+ var LENGTH = "^f y.((("+IF+" ("+ISEMPTY+" y)) "+ZERO+") ("+SUCC+" (f ("+TL+" y))))";
 // Uncomment the next line after you have implemented LENGTH for Y
-// var Y_LENGTH = "("+Y+" "+LENGTH+")";
+ var Y_LENGTH = "("+Y+" "+LENGTH+")";
 
 // Problem 4 -- Recursive function for the sum of the values in a list of numbers
 
-// var SUM = ?????????
+ var SUM = "^f x.((("+IF+" ("+ISEMPTY+" x)) "+ZERO+") (("+ADD+" ("+HD+" x)) (f ("+TL+" x))))";
+ 
 // Uncomment the next line after you have implemented SUM for Y
-// var Y_SUM = "("+Y+" "+SUM+")";
+ var Y_SUM = "("+Y+" "+SUM+")";
 
 // Uncomment the next three lines after you have implemented the a recursive sum func
-// var LIST1 = "((" + CONS + " " + ONE +") " + NIL + ")";
-// var LIST31 = "((" + CONS + " " +THREE +") " + LIST1 + ")";
-// var LIST531 = "((" + CONS + " " + FIVE +") " + LIST31 + ")";
+ var LIST1 = "((" + CONS + " " + ONE +") " + NIL + ")";
+ var LIST31 = "((" + CONS + " " +THREE +") " + LIST1 + ")";
+ var LIST531 = "((" + CONS + " " + FIVE +") " + LIST31 + ")";
+
+ var LISTa = "((" + CONS + " " + ZERO +") " + NIL + ")";
+ var LISTaa = "((" + CONS + " " +ZERO +") " + LISTa + ")";
+ var LISTaaa = "((" + CONS + " " + ZERO +") " + LISTaa + ")";
 
 
 // Problem 5 -- Using Matt Might's Y combinator in JS to recursively define exponentiation
@@ -113,7 +118,13 @@ var FactGen = function (fact) {
 // Implement the function that Y_in_JS can use to create a recursive
 // exponential function for a^n where n is a non-negative integer
 
-// var EXP_gen = ??????????
+ var EXP_gen = function(exp) {
+    return(function(n) {
+      return (function(x) {
+        return ((x==0) ? 1 : (n*exp(n)(x-1)));
+      });
+    });
+  };
 
 ///////////////////////////////////////////////////////////////////
 //// All test cases you add must be below this comment.  Everything
@@ -152,23 +163,27 @@ console.log("\n\nOutput from Problem 2 tests");
  console.log("Testing ISEMPTY on non-empty TL " + LC.interpret("("+ ISEMPTY + " (" + TL + " " + LISTBA + "))"));
  console.log("Testing HD of the TL on LISTCBA " + LC.interpret("("+ HD + " (" + TL + " " + LISTCBA + "))"));
  console.log("Testing HD of the TL of the TL on LISTCBA " + LC.interpret("("+ HD + " (" + TL + " (" + TL + " " + LISTCBA + ")))"));
+ console.log("Testing HD of the TL on LISTA " + LC.interpret("("+ HD + " (" + TL + " " + LISTA + "))"));
+ console.log("Testing TL of the TL on LISTA " + LC.interpret("("+ TL + " (" + TL + " " + LISTA + "))"));
 
 // Testing Problem 3
 
 console.log("\n\nOutput from Problem 3 tests");
-// console.log("Length of list with no elements " + LC.interpret("("+Y_LENGTH+" "+NIL+")"));
-// console.log("Length of list with one elements " + LC.interpret("("+Y_LENGTH+" "+LISTA+")"));
-// console.log("Length of list with two elements " + LC.interpret("("+Y_LENGTH+" "+LISTBA+")"));
-// console.log("Length of list with three elements " + LC.interpret("("+Y_LENGTH+" "+LISTCBA+")"));
+ console.log("Length of list with no elements " + LC.interpret("("+Y_LENGTH+" "+NIL+")"));
+ console.log("Length of list with one elements " + LC.interpret("("+Y_LENGTH+" "+LISTA+")"));
+ console.log("Length of list with two elements " + LC.interpret("("+Y_LENGTH+" "+LISTBA+")"));
+ console.log("Length of list with three elements " + LC.interpret("("+Y_LENGTH+" "+LISTCBA+")"));
 
 // Testing Problem 4
 console.log("\n\nOutput from Problem 4 tests");
-// console.log("Sum of list with 5, 3, 1 " + LC.interpret("("+Y_SUM+" "+LIST531+")"));
+ console.log("Sum of list with 5, 3, 1 " + LC.interpret("("+Y_SUM+" "+LIST531+")"));
+ console.log("Sum of list with 0s " + LC.interpret("("+Y_SUM+" "+LISTaaa+")"));
 
 //Testing Problem 5
 
 console.log("\n\nUsing Might's Y to define factorial and invoking it on 6 yields " + (Y_in_JS(FactGen))(6));
 console.log("\n\nOutput from Problem 5 tests");
-// console.log("4 ^ 3 is " + ((Y_in_JS(EXP_gen))(4))(3)) ;
-// console.log("3 ^ 4 is " + ((Y_in_JS(EXP_gen))(3))(4)) ;
+ console.log("4 ^ 3 is " + ((Y_in_JS(EXP_gen))(4))(3)) ;
+ console.log("3 ^ 4 is " + ((Y_in_JS(EXP_gen))(3))(4)) ;
+console.log("4 ^ 0 is " + ((Y_in_JS(EXP_gen))(4))(0)) ;
 
